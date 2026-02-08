@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LION — Портфолио (Киев)</title>
+
+  <style>
+    :root{
+      --bg0:#05070d;
+      --bg1:#0b0f17;
+      --bg2:#070a11;
+      --text:#e8ecf6;
+      --muted:rgba(232,236,246,.72);
+      --line:rgba(255,255,255,.12);
+      --accent:#ffb703;
+      --accent2:#fb8500;
+      --r:18px;
+      --max:1160px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{background:var(--bg0);}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(1400px 900px at 15% -10%,
+          rgba(255,183,3,.16) 0%,
+          rgba(255,183,3,.09) 32%,
+          rgba(255,183,3,.05) 52%,
+          rgba(255,183,3,.02) 70%,
+          transparent 88%),
+        radial-gradient(1200px 800px at 90% 5%,
+          rgba(251,133,0,.14) 0%,
+          rgba(251,133,0,.08) 34%,
+          rgba(251,133,0,.04) 56%,
+          rgba(251,133,0,.02) 74%,
+          transparent 90%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 48%, var(--bg2) 100%);
+      background-blend-mode: screen, screen, normal;
+      background-attachment: fixed;
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,7,13,.72), rgba(5,7,13,.28));
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .nav .wrap{padding-top:12px; padding-bottom:12px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 45px rgba(251,133,0,.18);
+      display:grid; place-items:center; color:#111; font-weight:1000;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.05));
+      color:var(--text);
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease;
+      white-space:nowrap;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+    }
+    .btn:hover{transform: translateY(-1px); filter:brightness(1.06)}
+    .btn.primary{
+      border:none; color:#111;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 50px rgba(251,133,0,.22);
+    }
+
+    section{padding:28px 0}
+    .card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: calc(var(--r) + 6px);
+      padding:18px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+    }
+    h1{margin:10px 0 8px; font-size: clamp(26px, 3.2vw, 40px); line-height:1.1}
+    p{margin:0; color:var(--muted); line-height:1.6}
+
+    .controls{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .search{
+      flex:1 1 240px;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(11,15,23,.55);
+      color:var(--text);
+      outline:none;
+      font-weight:700;
+    }
+    .search:focus{border-color: rgba(255,183,3,.55)}
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 1180px) and (min-width: 720px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 720px){ .grid{grid-template-columns:1fr} }
+
+    .work{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: calc(var(--r) + 6px);
+      overflow:hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,.22);
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease;
+      position:relative;
+    }
+    .work:hover{transform: translateY(-2px); filter:brightness(1.03)}
+
+    .cap{padding:14px}
+    .addr{margin:0; font-size:15.5px; font-weight:950; line-height:1.25; letter-spacing:-.2px}
+    .desc{margin-top:8px; color:rgba(232,236,246,.70); font-size:13.5px; line-height:1.45}
+
+    /* ===== СЛАЙДЕР В КАРТОЧКЕ ===== */
+    .slider{
+      position:relative;
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    .slides{
+      display:flex;
+      width:100%;
+      height:100%;
+      transition: transform .28s ease;
+    }
+    .slide{
+      flex:0 0 100%;
+      height:100%;
+    }
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      pointer-events:none;
+      user-select:none;
+    }
+    .navBtn{
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      width:40px;height:40px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color:rgba(232,236,246,.9);
+      display:grid; place-items:center;
+      font-weight:1000;
+      cursor:pointer;
+      opacity:.0;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .work:hover .navBtn{opacity:1}
+    .navBtn:hover{transform: translateY(-50%) scale(1.03)}
+    .prev{left:10px}
+    .next{right:10px}
+
+    .dots{
+      position:absolute;
+      left:0; right:0; bottom:10px;
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      pointer-events:none;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background: rgba(255,255,255,.28);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .dot.active{
+      background: rgba(255,183,3,.9);
+      border-color: rgba(255,183,3,.35);
+      box-shadow: 0 0 0 6px rgba(255,183,3,.12);
+    }
+
+    /* ===== ЛАЙТБОКС (тоже со слайдером) ===== */
+    .lightbox{
+      position:fixed; inset:0;
+      display:none;
+      place-items:center;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(10px);
+      z-index:999;
+      padding:18px;
+    }
+    .lbCard{
+      width:min(1040px, 100%);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,22,.78);
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+    }
+    .lbTop{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      gap:10px;
+    }
+    .lbTop b{font-size:14px}
+    .lbClose{
+      padding:8px 10px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:900;
+    }
+    .lbWrap{position:relative; background: rgba(0,0,0,.18)}
+    .lbImg{
+      width:100%;
+      max-height: 76vh;
+      object-fit: contain;
+      display:block;
+      background: rgba(0,0,0,.25);
+    }
+    .lbPrev,.lbNext{
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      width:46px;height:46px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color:rgba(232,236,246,.9);
+      display:grid; place-items:center;
+      font-weight:1000;
+      cursor:pointer;
+    }
+    .lbPrev{left:12px}
+    .lbNext{right:12px}
+
+    footer{
+      padding:26px 0 38px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color:rgba(232,236,246,.62);
+      font-size:13px;
+      margin-top:26px;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    /* ===== POPUP ЯЗЫКА (как на фото) ===== */
+    .langPop{
+      position:fixed;
+      right:18px;
+      bottom:92px;
+      z-index:200;
+      width:min(420px, calc(100vw - 36px));
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,22,.72);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 28px 80px rgba(0,0,0,.55);
+      padding:16px;
+      display:none;
+    }
+    .langPop.show{display:block}
+    .langTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      margin-bottom:8px;
+    }
+    .langTitle{
+      font-weight:1000;
+      letter-spacing:-.2px;
+    }
+    .langText{
+      margin-top:6px;
+      color: rgba(232,236,246,.74);
+      line-height:1.55;
+      font-size:13.5px;
+    }
+    .xBtn{
+      width:36px;height:36px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:rgba(232,236,246,.9);
+      cursor:pointer;
+      font-weight:1000;
+    }
+    .langActions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .langActions .btn{flex:1 1 160px}
+    .langActions .btn.primary{color:#111}
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="wrap row">
+      <a class="brand" href="index.html">
+        <div class="logo">L</div>
+        <div>
+          <b>LION</b>
+          <div style="color:rgba(232,236,246,.70); font-size:12px; font-weight:750; margin-top:2px;">
+            Портфолио • Киев
+          </div>
+        </div>
+      </a>
+
+      <div class="row" style="justify-content:flex-end; gap:10px">
+        <a class="btn" href="tel:+380997772391">+380 99 777 23 91</a>
+        <a class="btn primary" href="index.html#contacts">Контакты</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section>
+      <div class="card">
+        <h1>Портфолио ремонтов</h1>
+        <p>Каждый объект — 3–4 фото. Клик по карточке откроет просмотр.</p>
+
+        <div class="controls">
+          <input id="search" class="search" placeholder="Поиск по адресу / описанию…" />
+          <a class="btn" href="index.html">На главную</a>
+          <a class="btn primary" href="tel:+380997772391">Позвонить</a>
+        </div>
+      </div>
+
+      <div id="grid" class="grid">
+
+        <!-- ОБЪЕКТ 1 (4 фото) -->
+        <article class="work" data-title="Киев, ул. Антоновича 12" data-images="img/a1-1.jpg,img/a1-2.jpg,img/a1-3.jpg,img/a1-4.jpg">
+          <div class="slider" data-index="0">
+            <div class="slides">
+              <div class="slide"><img src="img/a1-1.jpg" alt="Антоновича 12 — фото 1"></div>
+              <div class="slide"><img src="img/a1-2.jpg" alt="Антоновича 12 — фото 2"></div>
+              <div class="slide"><img src="img/a1-3.jpg" alt="Антоновича 12 — фото 3"></div>
+              <div class="slide"><img src="img/a1-4.jpg" alt="Антоновича 12 — фото 4"></div>
+            </div>
+            <button class="navBtn prev" type="button" aria-label="Предыдущее">‹</button>
+            <button class="navBtn next" type="button" aria-label="Следующее">›</button>
+            <div class="dots">
+              <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
+          <div class="cap">
+            <h3 class="addr">Киев, ул. Антоновича 12</h3>
+            <p class="desc">2-комнатная • ремонт под ключ • кухня + санузел + коридор</p>
+          </div>
+        </article>
+
+        <!-- ОБЪЕКТ 2 (3 фото) -->
+        <article class="work" data-title="Киев, Оболонь — ул. Героев Днепра 34" data-images="img/a2-1.jpg,img/a2-2.jpg,img/a2-3.jpg">
+          <div class="slider" data-index="0">
+            <div class="slides">
+              <div class="slide"><img src="img/a2-1.jpg" alt="Героев Днепра 34 — фото 1"></div>
+              <div class="slide"><img src="img/a2-2.jpg" alt="Героев Днепра 34 — фото 2"></div>
+              <div class="slide"><img src="img/a2-3.jpg" alt="Героев Днепра 34 — фото 3"></div>
+            </div>
+            <button class="navBtn prev" type="button" aria-label="Предыдущее">‹</button>
+            <button class="navBtn next" type="button" aria-label="Следующее">›</button>
+            <div class="dots">
+              <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
+          <div class="cap">
+            <h3 class="addr">Киев, Оболонь — ул. Героев Днепра 34</h3>
+            <p class="desc">Косметический ремонт • покраска стен • пол • свет</p>
+          </div>
+        </article>
+
+      </div>
+
+      <footer>
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+          <div>© <span id="year"></span> <b>LION</b> • Киев</div>
+          <div class="mono"><a href="tel:+380997772391">+380 99 777 23 91</a></div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lbCard">
+      <div class="lbTop">
+        <b id="lbTitle">Фото</b>
+        <button class="lbClose" id="lbClose">Закрыть ✕</button>
+      </div>
+      <div class="lbWrap">
+        <button class="lbPrev" type="button" aria-label="Предыдущее">‹</button>
+        <img id="lbImg" class="lbImg" alt="Просмотр фото" />
+        <button class="lbNext" type="button" aria-label="Следующее">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup language -->
+  <div id="langPop" class="langPop" role="dialog" aria-modal="true">
+    <div class="langTop">
+      <div>
+        <div class="langTitle">«Україна починається з тебе»</div>
+        <div class="langText">
+          Друже, все добре! Ми маємо україномовну версію сайту — обери мову, яка тобі зручніша.
+        </div>
+      </div>
+      <button class="xBtn" id="langClose" type="button" aria-label="Закрыть">✕</button>
+    </div>
+
+    <div class="langActions">
+      <button class="btn" id="toRu" type="button">Російською</button>
+      <button class="btn primary" id="toUa" type="button">Українською</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // SEARCH
+    const search = document.getElementById("search");
+    const cards = Array.from(document.querySelectorAll(".work"));
+    search.addEventListener("input", () => {
+      const q = search.value.trim().toLowerCase();
+      cards.forEach(c => {
+        const t = (c.getAttribute("data-title") || "").toLowerCase();
+        const text = (c.innerText || "").toLowerCase();
+        c.style.display = (t.includes(q) || text.includes(q)) ? "" : "none";
+      });
+    });
+
+    // CARD SLIDERS
+    function setSlide(slider, idx){
+      const slides = slider.querySelector(".slides");
+      const total = slides.children.length;
+      const i = (idx + total) % total;
+      slider.dataset.index = String(i);
+      slides.style.transform = `translateX(${-i * 100}%)`;
+
+      const dots = slider.querySelectorAll(".dot");
+      dots.forEach((d, k)=> d.classList.toggle("active", k === i));
+    }
+
+    document.querySelectorAll(".work").forEach(card=>{
+      const slider = card.querySelector(".slider");
+      if(!slider) return;
+
+      // prevent card click when pressing arrows
+      slider.querySelector(".prev").addEventListener("click", (e)=>{
+        e.stopPropagation();
+        setSlide(slider, Number(slider.dataset.index) - 1);
+      });
+      slider.querySelector(".next").addEventListener("click", (e)=>{
+        e.stopPropagation();
+        setSlide(slider, Number(slider.dataset.index) + 1);
+      });
+    });
+
+    // LIGHTBOX with multiple images
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbTitle = document.getElementById("lbTitle");
+    const lbClose = document.getElementById("lbClose");
+    const lbPrev = document.querySelector(".lbPrev");
+    const lbNext = document.querySelector(".lbNext");
+
+    let lbImages = [];
+    let lbIndex = 0;
+
+    function openLB(title, images, startIndex){
+      lbImages = images;
+      lbIndex = Math.max(0, Math.min(startIndex, images.length - 1));
+      lbTitle.textContent = title || "Фото";
+      lbImg.src = lbImages[lbIndex] || "";
+      lb.style.display = "grid";
+      lb.setAttribute("aria-hidden","false");
+    }
+
+    function closeLB(){
+      lb.style.display = "none";
+      lb.setAttribute("aria-hidden","true");
+      lbImg.src = "";
+      lbImages = [];
+      lbIndex = 0;
+    }
+
+    function stepLB(dir){
+      if(!lbImages.length) return;
+      lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+      lbImg.src = lbImages[lbIndex];
+    }
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        const title = card.getAttribute("data-title") || "Фото";
+        const raw = card.getAttribute("data-images") || "";
+        const images = raw.split(",").map(s=>s.trim()).filter(Boolean);
+        // стартуем с текущего слайда карточки
+        const slider = card.querySelector(".slider");
+        const start = slider ? Number(slider.dataset.index || "0") : 0;
+        if(images.length) openLB(title, images, start);
+      });
+    });
+
+    lbClose.addEventListener("click", closeLB);
+    lb.addEventListener("click", (e)=>{ if(e.target===lb) closeLB(); });
+    document.addEventListener("keydown", (e)=>{
+      if(lb.style.display === "grid"){
+        if(e.key==="Escape") closeLB();
+        if(e.key==="ArrowLeft") stepLB(-1);
+        if(e.key==="ArrowRight") stepLB(1);
+      }
+    });
+    lbPrev.addEventListener("click", ()=>stepLB(-1));
+    lbNext.addEventListener("click", ()=>stepLB(1));
+
+    // LANGUAGE POPUP (показываем 1 раз, потом скрываем)
+    const langPop = document.getElementById("langPop");
+    const langClose = document.getElementById("langClose");
+    const toRu = document.getElementById("toRu");
+    const toUa = document.getElementById("toUa");
+
+    if(!localStorage.getItem("lion_lang_popup_closed")){
+      // небольшая задержка чтобы выглядело как у сайтов
+      setTimeout(()=> langPop.classList.add("show"), 900);
+    }
+
+    function closeLang(){
+      langPop.classList.remove("show");
+      localStorage.setItem("lion_lang_popup_closed","1");
+    }
+
+    langClose.addEventListener("click", closeLang);
+    toRu.addEventListener("click", closeLang);
+    toUa.addEventListener("click", closeLang);
+  </script>
+</body>
+</html>

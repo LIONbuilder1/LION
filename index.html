@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LION — Ремонт квартир в Киеве</title>
+  <meta name="description" content="LION — ремонты под ключ в Киеве. Квартиры, Дома, Коттеджи, офисы, коммерческие помещения. Тел: +380 99 777 23 91" />
+  <style>
+    :root{
+      --bg0:#05070d;
+      --bg1:#0b0f17;
+      --bg2:#070a11;
+      --text:#e8ecf6;
+      --muted:rgba(232,236,246,.72);
+      --line:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
+      --accent:#ffb703;
+      --accent2:#fb8500;
+      --shadow:0 18px 55px rgba(0,0,0,.45);
+      --r:18px;
+      --max:1160px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{background:var(--bg0);}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+
+      background:
+        radial-gradient(1400px 900px at 15% -10%,
+          rgba(255,183,3,.18) 0%,
+          rgba(255,183,3,.10) 30%,
+          rgba(255,183,3,.05) 50%,
+          rgba(255,183,3,.02) 65%,
+          transparent 82%),
+        radial-gradient(1200px 800px at 90% 5%,
+          rgba(251,133,0,.16) 0%,
+          rgba(251,133,0,.09) 32%,
+          rgba(251,133,0,.05) 52%,
+          rgba(251,133,0,.02) 70%,
+          transparent 88%),
+        radial-gradient(1200px 900px at 50% 115%,
+          rgba(56,189,248,.10) 0%,
+          rgba(56,189,248,.06) 28%,
+          rgba(56,189,248,.03) 52%,
+          rgba(56,189,248,.015) 72%,
+          transparent 90%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 48%, var(--bg2) 100%);
+      background-blend-mode: screen, screen, screen, normal;
+      background-attachment: fixed;
+    }
+
+    .bg{
+      position:fixed; inset:-2px;
+      z-index:-2;
+      pointer-events:none;
+      opacity:.22;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 40%),
+        linear-gradient(315deg, rgba(255,255,255,.05), transparent 45%),
+        radial-gradient(900px 600px at 40% 30%, rgba(255,255,255,.06), transparent 60%);
+      filter: blur(0px);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+
+    .topbar{
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .wrap{padding-top:10px; padding-bottom:10px}
+    .mini{display:flex; gap:16px; flex-wrap:wrap; color:rgba(232,236,246,.7); font-size:13px; font-weight:650}
+    .mini b{color:rgba(232,236,246,.9)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:rgba(232,236,246,.72);
+      font-size:12.5px;
+      font-weight:750;
+      white-space:nowrap;
+    }
+    .dot{width:7px;height:7px;border-radius:50%; background:var(--accent); box-shadow:0 0 0 6px rgba(255,183,3,.12)}
+
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,7,13,.72), rgba(5,7,13,.28));
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .nav .wrap{padding-top:12px; padding-bottom:12px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 45px rgba(251,133,0,.18);
+      display:grid; place-items:center; color:#111; font-weight:1000;
+      letter-spacing:.5px;
+    }
+    .brand b{letter-spacing:.8px}
+    .menu{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
+    .menu a{color:rgba(232,236,246,.72); font-weight:750; font-size:13.5px}
+    .menu a:hover{color:var(--text)}
+    @media (max-width: 920px){ .menu{display:none} }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.05));
+      color:var(--text);
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease;
+      white-space:nowrap;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+    }
+    .btn:hover{transform: translateY(-1px); filter:brightness(1.06)}
+    .btn.primary{
+      border:none; color:#111;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 50px rgba(251,133,0,.22);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.04);
+    }
+
+    section{padding:34px 0}
+    .title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    h1{
+      margin:12px 0 10px;
+      font-size: clamp(30px, 4.1vw, 56px);
+      line-height:1.05;
+      letter-spacing:-.9px;
+    }
+    h2{
+      margin:0;
+      font-size: clamp(22px, 2.3vw, 32px);
+      letter-spacing:-.35px;
+    }
+    .sub{margin:0; color:var(--muted); line-height:1.6; max-width:74ch; font-size:15px}
+
+    .card{
+      border:1px solid rgba(255,255,255,.12);
+      background: var(--card);
+      border-radius: var(--r);
+      padding:18px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.22);
+    }
+    .card.soft{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border-radius: calc(var(--r) + 6px);
+      box-shadow: var(--shadow);
+    }
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    @media (max-width: 920px){ .grid3{grid-template-columns:1fr} }
+    .grid2{display:grid; grid-template-columns:1.15fr .85fr; gap:14px}
+    @media (max-width: 920px){ .grid2{grid-template-columns:1fr} }
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:7px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:rgba(232,236,246,.75);
+      font-size:13px; font-weight:800;
+      width:fit-content;
+    }
+
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px}
+    @media (max-width: 520px){ .stats{grid-template-columns:1fr} }
+    .stat{padding:14px; border-radius:16px; background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12)}
+    .stat b{display:block; font-size:18px}
+    .stat span{color:rgba(232,236,246,.7); font-size:13px; font-weight:650}
+
+    .heroImg{
+      border-radius: calc(var(--r) + 10px);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      min-height: 360px;
+      position:relative;
+    }
+    .heroImg img{
+      width:100%; height:100%;
+      object-fit: cover;
+      display:block;
+      filter:saturate(1.02) contrast(1.03);
+      opacity:.92;
+    }
+    .heroImg::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(700px 360px at 30% 20%, rgba(0,0,0,.35), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+    .heroOverlay{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:18px;
+      gap:10px;
+    }
+    .heroOverlay .box{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding:14px;
+      max-width: 520px;
+    }
+    .heroOverlay .box b{font-size:18px}
+    .heroOverlay .box span{display:block; color:rgba(232,236,246,.72); margin-top:6px; line-height:1.5; font-size:13.5px}
+
+    .whyGrid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+    @media (max-width: 920px){ .whyGrid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 520px){ .whyGrid{grid-template-columns:1fr} }
+    .why{
+      position:relative;
+      padding:16px;
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+    }
+    .why .n{
+      font-size:44px;
+      font-weight:1000;
+      color:rgba(255,183,3,.92);
+      line-height:1;
+      letter-spacing:-1px;
+    }
+    .why b{display:block; margin-top:10px; font-size:15px}
+    .why p{margin:8px 0 0; color:rgba(232,236,246,.70); font-size:13.5px; line-height:1.5}
+
+    /* services */
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
+      background: rgba(255,183,3,.12);
+      border:1px solid rgba(255,183,3,.22);
+      color:#ffde9b;
+      font-size:12.5px;
+      font-weight:850;
+      width:fit-content;
+    }
+
+    /* included list */
+    .included{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+    @media (max-width: 920px){ .included{grid-template-columns:1fr} }
+    .iCol{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--r);
+      padding:14px;
+    }
+    .iCol b{display:block; margin-bottom:10px}
+    ul{margin:0; padding:0; list-style:none; display:grid; gap:8px}
+    li{display:flex; gap:10px; align-items:flex-start; color:rgba(232,236,246,.74); font-size:13.5px; line-height:1.45}
+    .tick{
+      width:18px;height:18px;border-radius:6px;
+      background: rgba(255,183,3,.16);
+      border:1px solid rgba(255,183,3,.26);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      margin-top:1px;
+      color:#ffde9b;
+      font-weight:1000;
+      font-size:12px;
+    }
+
+    /* timeline */
+    .steps{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 920px){ .steps{grid-template-columns:1fr} }
+    .ring{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: calc(var(--r) + 10px);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ring::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 420px at 28% 45%, rgba(255,183,3,.18), transparent 62%),
+        radial-gradient(420px 420px at 70% 55%, rgba(251,133,0,.14), transparent 64%);
+      filter: blur(8px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .ring h3{margin:0 0 8px}
+    .path{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 920px){ .path{grid-template-columns:1fr} }
+    .node{
+      position:relative;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      border-radius: var(--r);
+      padding:14px;
+      min-height: 92px;
+    }
+    .node .ic{
+      width:44px;height:44px;border-radius:16px;
+      background: linear-gradient(135deg, rgba(255,183,3,.95), rgba(251,133,0,.85));
+      color:#111;
+      display:grid; place-items:center;
+      font-weight:1000;
+      margin-bottom:10px;
+      box-shadow: 0 18px 40px rgba(251,133,0,.18);
+    }
+    .node b{display:block; font-size:13.5px}
+    .node span{display:block; color:rgba(232,236,246,.72); font-size:12.8px; line-height:1.45; margin-top:6px}
+
+    /* FAQ */
+    .faq{display:grid; gap:10px; margin-top:14px}
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      overflow:hidden;
+    }
+    summary{
+      cursor:pointer;
+      padding:16px 16px;
+      list-style:none;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+    }
+    summary::-webkit-details-marker{display:none}
+    .plus{
+      width:30px;height:30px;border-radius:12px;
+      border:1px solid rgba(255,183,3,.28);
+      background: rgba(255,183,3,.10);
+      display:grid; place-items:center;
+      color:#ffde9b;
+      font-weight:1000;
+      flex:0 0 auto;
+    }
+    details[open] .plus{transform: rotate(45deg)}
+    .answer{padding:0 16px 16px; color:rgba(232,236,246,.74); line-height:1.65; font-size:14px}
+
+    /* footer */
+    footer{
+      padding:26px 0 38px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color:rgba(232,236,246,.62);
+      font-size:13px;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    /* small floating call button */
+    .floatCall{
+      position:fixed;
+      right:18px; bottom:18px;
+      z-index:80;
+      display:flex; align-items:center; gap:10px;
+    }
+    .fab{
+      width:54px;height:54px;border-radius:18px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 22px 60px rgba(251,133,0,.25);
+      display:grid; place-items:center;
+      color:#111; font-weight:1000;
+      border:none;
+    }
+    .fabLabel{
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(12px);
+      color:rgba(232,236,246,.8);
+      font-weight:850;
+      display:none;
+    }
+    @media (min-width: 980px){ .fabLabel{display:block} }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <div class="topbar">
+    <div class="wrap row">
+      <div class="mini">
+        <span class="pill"><span class="dot"></span><b>Только Киев</b> (без области)</span>
+        <span>Ремонт квартир • офисов • коммерции</span>
+      </div>
+      <div class="mini">
+        <span>Тел: <b><a href="tel:+380997772391">+380 99 777 23 91</a></b></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="wrap row">
+      <a class="brand" href="index.html">
+        <div class="logo">L</div>
+        <div>
+          <b>LION</b>
+          <div style="color:rgba(232,236,246,.70); font-size:12px; font-weight:750; margin-top:2px;">
+            Ремонт под ключ • Киев
+          </div>
+        </div>
+      </a>
+
+      <nav class="menu" aria-label="Навигация">
+        <a href="#why">Почему мы</a>
+        <a href="#services">Услуги</a>
+        <a href="#included">Что входит</a>
+        <a href="#process">Порядок работ</a>
+        <a href="#faq">FAQ</a>
+        <a href="works.html">Готовые квартиры</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <div class="row" style="justify-content:flex-end; gap:10px">
+        <a class="btn ghost" href="tel:+380997772391">Позвонить</a>
+        <a class="btn primary" href="works.html">Портфолио</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section>
+      <div class="grid2">
+        <div class="card soft">
+          <div class="kicker"><span class="dot"></span> Ремонт в Киеве — аккуратно, по этапам, с контролем</div>
+          <h1>Ремонт под ключ —<br>в срок и без “сюрпризов”.</h1>
+          <p class="sub">
+            Мы делаем <b>только ремонты</b>: квартиры, офисы и коммерческие помещения.
+            Дома/коттеджи и строительство не берем. Работаем по Киеву (без области).
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+            <a class="btn primary" href="tel:+380997772391">Позвонить</a>
+            <a class="btn" href="works.html">Смотреть работы</a>
+            <a class="btn ghost" href="#contacts">Контакты</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><b>План</b><span>этапы, сроки, контроль</span></div>
+            <div class="stat"><b>Качество</b><span>аккуратная отделка</span></div>
+            <div class="stat"><b>Киев</b><span>работаем по городу</span></div>
+          </div>
+        </div>
+
+        <div class="heroImg" aria-label="Блок с фото">
+          <img src="img/hero.jpg" alt="Ремонт интерьера" onerror="this.style.display='none';">
+          <div class="heroOverlay">
+            <div class="box">
+              <b>Обсудим ремонт</b>
+              <span>Оценим объем работ, подскажем оптимальный вариант и согласуем следующий шаг.</span>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                <a class="btn primary" href="tel:+380997772391">Позвонить</a>
+                <a class="btn" href="works.html">Портфолио</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="title">
+        <div>
+          <h2>Почему выбирают LION</h2>
+          <p class="sub">8 причин, из-за которых клиентам спокойно работать с нами.</p>
+        </div>
+      </div>
+
+      <div class="whyGrid">
+        <div class="why"><div class="n">1</div><b>Опыт</b><p>Понимаем этапы ремонта и типичные ошибки — не допускаем лишних переделок.</p></div>
+        <div class="why"><div class="n">2</div><b>Качество по чек-листу</b><p>Контроль по ключевым точкам: черновые, узлы, чистовая отделка.</p></div>
+        <div class="why"><div class="n">3</div><b>Полный цикл</b><p>От замера и сметы до финальной сдачи и порядка на объекте.</p></div>
+        <div class="why"><div class="n">4</div><b>Реализация идеи</b><p>Делаем так, как договорились: аккуратно, ровно, без “и так сойдёт”.</p></div>
+        <div class="why"><div class="n">5</div><b>Стабильная команда</b><p>Проверенные мастера, четкое распределение задач и ответственности.</p></div>
+        <div class="why"><div class="n">6</div><b>Надзор</b><p>Промежуточные проверки и понятная коммуникация по ходу работ.</p></div>
+        <div class="why"><div class="n">7</div><b>Отчетность</b><p>Фиксируем прогресс: что сделано, что дальше, какие материалы нужны.</p></div>
+        <div class="why"><div class="n">8</div><b>Прозрачность</b><p>Смета по этапам — клиент понимает, за что платит.</p></div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="title">
+        <div>
+          <h2>Услуги</h2>
+          <p class="sub">Только ремонты в Киеве. Строительство домов/коттеджей не выполняем.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="badge">Под ключ</div>
+          <h3 style="margin:10px 0 8px;">Ремонт квартиры</h3>
+          <p class="sub">Черновые и чистовые работы, стены/пол, плитка, малярка, электрика, сантехника — по задаче.</p>
+        </div>
+        <div class="card">
+          <div class="badge">Быстро</div>
+          <h3 style="margin:10px 0 8px;">Косметический ремонт</h3>
+          <p class="sub">Освежить помещение: покраска, обои, локальные исправления, мелкие работы, обновление покрытия.</p>
+        </div>
+        <div class="card">
+          <div class="badge">Бизнес</div>
+          <h3 style="margin:10px 0 8px;">Офисы и коммерция</h3>
+          <p class="sub">Ремонт под задачи бизнеса и сроки: аккуратность, понятные этапы, чистая сдача.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="included">
+      <div class="title">
+        <div>
+          <h2>Что входит в работы</h2>
+          <p class="sub">Три направления: проектирование, ремонт/отделка и управление работами.</p>
+        </div>
+      </div>
+
+      <div class="card soft">
+        <div class="included">
+          <div class="iCol">
+            <b>Проектирование</b>
+            <ul>
+              <li><span class="tick">✓</span>Обмер и планировка</li>
+              <li><span class="tick">✓</span>Подбор решений под бюджет</li>
+              <li><span class="tick">✓</span>Согласование материалов и узлов</li>
+              <li><span class="tick">✓</span>План работ по этапам</li>
+            </ul>
+          </div>
+          <div class="iCol">
+            <b>Ремонт и отделка</b>
+            <ul>
+              <li><span class="tick">✓</span>Черновые работы (подготовка)</li>
+              <li><span class="tick">✓</span>Электрика и сантехника (по задаче)</li>
+              <li><span class="tick">✓</span>Плитка, стены, пол, потолок</li>
+              <li><span class="tick">✓</span>Чистовая отделка и уборка</li>
+            </ul>
+          </div>
+          <div class="iCol">
+            <b>Управление проектом</b>
+            <ul>
+              <li><span class="tick">✓</span>Координация мастеров</li>
+              <li><span class="tick">✓</span>Контроль качества по чек-листу</li>
+              <li><span class="tick">✓</span>Закупка/доставка материалов</li>
+              <li><span class="tick">✓</span>Сдача работ и финальная проверка</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+          <a class="btn primary" href="works.html">Посмотреть готовые квартиры</a>
+          <a class="btn" href="tel:+380997772391">Позвонить</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="title">
+        <div>
+          <h2>Порядок работ</h2>
+          <p class="sub">Пять шагов: от обращения до сдачи результата.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="ring">
+          <h3 style="margin:0;">Схема работы с нами</h3>
+          <p class="sub">Понятный процесс, чтобы не было хаоса и “неожиданностей”.</p>
+
+          <div class="path">
+            <div class="node">
+              <div class="ic">1</div>
+              <b>Обращение</b>
+              <span>Созвон/сообщение, коротко уточняем задачу.</span>
+            </div>
+            <div class="node">
+              <div class="ic">2</div>
+              <b>Замер</b>
+              <span>Приезжаем, фиксируем объем и нюансы.</span>
+            </div>
+            <div class="node">
+              <div class="ic">3</div>
+              <b>Смета</b>
+              <span>Считаем этапы и стоимость, согласуем план.</span>
+            </div>
+            <div class="node">
+              <div class="ic">4</div>
+              <b>Ремонт</b>
+              <span>Работы по этапам с контролем качества.</span>
+            </div>
+            <div class="node">
+              <div class="ic">5</div>
+              <b>Сдача</b>
+              <span>Финальная проверка и аккуратная передача.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card soft" id="contacts">
+          <div class="kicker"><span class="dot"></span> Контакты</div>
+          <h3 style="margin:10px 0 8px;">Киев, Украина</h3>
+          <p class="sub">Работаем только по Киеву (без области). Делаем только ремонты.</p>
+
+          <div style="margin-top:14px; display:grid; gap:10px;">
+            <a class="btn primary" href="tel:+380997772391">Позвонить: +380 99 777 23 91</a>
+            <a class="btn" href="works.html">Готовые квартиры</a>
+          </div>
+
+          <div style="margin-top:12px; color:rgba(232,236,246,.68); font-size:13px; line-height:1.55;">
+            График: Пн–Сб • Связь: телефон/мессенджер
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="title">
+        <div>
+          <h2>FAQ</h2>
+          <p class="sub">Ответы на популярные вопросы по ремонту в Киеве.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>Сколько стоит ремонт? <span class="plus">+</span></summary>
+          <div class="answer">
+            Стоимость зависит от площади, состояния помещения и задач (черновые/чистовые, плитка, инженерия).
+            Проще всего назвать ориентир после короткого уточнения и замера. Смету делаем по этапам.
+          </div>
+        </details>
+
+        <details>
+          <summary>Сколько времени занимает ремонт? <span class="plus">+</span></summary>
+          <div class="answer">
+            Срок зависит от объема и сложности. После замера фиксируем этапы и график,
+            чтобы было понятно, когда что будет готово.
+          </div>
+        </details>
+
+        <details>
+          <summary>Можно ли жить в квартире во время ремонта? <span class="plus">+</span></summary>
+          <div class="answer">
+            Иногда да, но это зависит от этапа (пыльные/шумные работы, санузел, электрика).
+            Обсуждаем заранее и подбираем вариант, чтобы было максимально удобно.
+          </div>
+        </details>
+
+        <details>
+          <summary>Вы работаете по области? <span class="plus">+</span></summary>
+          <div class="answer">
+            Нет. Мы работаем только по Киеву (Украина), без области.
+          </div>
+        </details>
+
+        <details>
+          <summary>Вы делаете дома/коттеджи? <span class="plus">+</span></summary>
+          <div class="answer">
+            Да. Мы занимаемся ремонтами: Домов, котетджов квартиры, офисы, коммерческие помещения.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <footer>
+      <div class="row">
+        <div>© <span id="year"></span> <b>LION</b> • Киев</div>
+        <div class="mono"><a href="tel:+380997772391">+380 99 777 23 91</a></div>
+      </div>
+    </footer>
+  </main>
+
+  <div class="floatCall">
+    <div class="fabLabel">Позвонить</div>
+    <a class="fab" href="tel:+380997772391" aria-label="Позвонить">☎</a>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
