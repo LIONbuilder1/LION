@@ -22,13 +22,16 @@
       --max:1160px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    html{background:var(--bg0);}
+    html{
+  background:#05070d;
+}
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       overflow-x:hidden;
+      min-height:100vh;
 
       background:
         radial-gradient(1400px 900px at 15% -10%,
@@ -50,8 +53,9 @@
           rgba(56,189,248,.015) 72%,
           transparent 90%),
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 48%, var(--bg2) 100%);
-      background-blend-mode: screen, screen, screen, normal;
-      background-attachment: fixed;
+      background-blend-mode: normal;
+      background-attachment: scroll;
+
     }
 
     .bg{
@@ -124,6 +128,7 @@
       transition: transform .15s ease, filter .15s ease;
       white-space:nowrap;
       box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      transition: transform .22s ease, filter .22s ease, box-shadow .22s ease;
     }
     .btn:hover{transform: translateY(-1px); filter:brightness(1.06)}
     .btn.primary{
@@ -158,12 +163,12 @@
       background: var(--card);
       border-radius: var(--r);
       padding:18px;
-      box-shadow: 0 12px 35px rgba(0,0,0,.22);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
     .card.soft{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
       border-radius: calc(var(--r) + 6px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 16px 42px rgba(0,0,0,.28);
     }
     .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
     @media (max-width: 920px){ .grid3{grid-template-columns:1fr} }
@@ -207,7 +212,7 @@
       position:absolute; inset:0;
       background:
         radial-gradient(700px 360px at 30% 20%, rgba(0,0,0,.35), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.55));
+        linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.0));
       pointer-events:none;
     }
     .heroOverlay{
@@ -217,13 +222,19 @@
       gap:10px;
     }
     .heroOverlay .box{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding:14px;
-      max-width: 520px;
-    }
+  border:1px solid rgba(255,255,255,.16);
+  background: linear-gradient(180deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.05)
+  );
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding:14px;
+  max-width: 520px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.35);
+
+}
+
     .heroOverlay .box b{font-size:18px}
     .heroOverlay .box span{display:block; color:rgba(232,236,246,.72); margin-top:6px; line-height:1.5; font-size:13.5px}
 
@@ -410,29 +421,48 @@
     }
     @media (min-width: 980px){ .fabLabel{display:block}
   }
-    .btn-call{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  padding:16px 22px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#000;
-  font-weight:700;
-  border-radius:999px;
-  text-decoration:none;
-  box-shadow:var(--shadow);
-  z-index:999;
+
+
+/* Smooth section transition (без черных полос) */
+main > section{
+  position: relative;
+  overflow: visible;
 }
-.btn-call:hover{
-  transform:translateY(-2px);
+
+/* градиент + блюр => нет резкой линии */
+main > section::after{
+  content:"";
+  position:absolute;
+  left:-60px;
+  right:-60px;
+  bottom:-70px;
+  height:160px;
+  pointer-events:none;
+
+  /* главное: в конце снова transparent, чтобы не было темной “черты” */
+  background: linear-gradient(
+    to bottom,
+    rgba(5,7,13,0) 0%,
+    rgba(5,7,13,.22) 45%,
+    rgba(5,7,13,.12) 70%,
+    rgba(5,7,13,0) 100%
+  );
+
+  filter: blur(18px);
+  opacity: .95;
 }
+
+/* чтобы фейд не лез поверх футера */
+main > section:last-of-type::after{
+  display:none;
+}
+
 
   </style>
 </head>
 
 <body>
 
-<a href="tel:+380997772391" class="btn-call">Позвонить</a>
 
 <div class="bg"></div>
 
@@ -527,7 +557,7 @@
       </div>
 
       <div class="whyGrid">
-        <div class="why"><div class="n">1</div><b>Опыт</b><p>Понимаем этапы ремонта и типичные ошибки — не допускаем лишних переделок.</p></div>
+        <div class="why"><div class="n">1</div><b>Опыт</b><p>За плечами <strong>150+ объектов</strong> — четкое понимание этапов ремонта без лишних переделок.</p></div>
         <div class="why"><div class="n">2</div><b>Качество по чек-листу</b><p>Контроль по ключевым точкам: черновые, узлы, чистовая отделка.</p></div>
         <div class="why"><div class="n">3</div><b>Полный цикл</b><p>От замера и сметы до финальной сдачи и порядка на объекте.</p></div>
         <div class="why"><div class="n">4</div><b>Реализация идеи</b><p>Делаем так, как договорились: аккуратно, ровно, без “и так сойдёт”.</p></div>
@@ -606,7 +636,6 @@
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
           <a class="btn primary" href="works.html">Посмотреть готовые квартиры</a>
-          <a class="btn" href="tel:+380997772391">Позвонить</a>
         </div>
       </div>
     </section>
@@ -727,10 +756,6 @@
     </footer>
   </main>
 
-  <div class="floatCall">
-    <div class="fabLabel">Позвонить</div>
-    <a class="fab" href="tel:+380997772391" aria-label="Позвонить">☎</a>
-  </div>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
